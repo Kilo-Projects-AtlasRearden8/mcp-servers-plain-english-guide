@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What is MCP? — Plain English Guide</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html">MCP Plain English<span class="llc">· Asdale Dynamics, LLC</span></a>
+    <nav class="nav-links">
+      <a href="what-is-mcp.html">What is MCP?</a>
+      <a href="installing-running.html">Install &amp; run</a>
+      <a href="connecting-to-files.html">Files</a>
+      <a href="connecting-to-databases.html">Databases</a>
+      <a href="safety-rules.html">Safety</a>
+      <a href="checklists.html">Checklists</a>
+    </nav>
+  </div>
+</header>
+
+<main class="article">
+  <header>
+    <p class="kicker">Chapter 1 · Beginner manual</p>
+    <h1>What Is the Model Context Protocol (MCP)?</h1>
+    <p class="intro">Written for beginners, by Asdale Dynamics, LLC. Plain English, step by step, never condescending.</p>
+  </header>
+
+  <p>If you've used an AI assistant, you know it can write emails, summarize notes, and answer questions. But until recently, your AI could only see what you typed or pasted into the chat. It couldn't peek at the files on your computer, read your calendar, or query your database unless you copied everything in by hand.</p>
+
+  <p><strong>The Model Context Protocol (MCP) changes that.</strong> Think of MCP as a universal plug — like USB, but for AI. It lets AI assistants safely connect to the tools and data you already use, without you having to copy and paste forever.</p>
+
+  <blockquote>
+    <p>MCP lets an AI assistant ask your computer for information (your files, a database, a calendar) through a small helper program called an MCP server, instead of you pasting that information into the chat yourself.</p>
+  </blockquote>
+
+  <h2>The three parts</h2>
+  <table>
+    <thead>
+      <tr><th>Part</th><th>What it is</th><th>Real-world analogy</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>AI host</td><td>The AI app you chat with (Claude Desktop, VS Code with Copilot, etc.)</td><td>You, holding the remote</td></tr>
+      <tr><td>MCP client</td><td>The part of the AI app that speaks MCP</td><td>The cable</td></tr>
+      <tr><td>MCP server</td><td>A small program that exposes one kind of data (files, database, etc.)</td><td>The appliance you plug in</td></tr>
+    </tbody>
+  </table>
+
+  <p>The AI host runs the MCP client. The client talks to MCP servers. Each server is responsible for one thing — for example, one server reads files from a folder you choose, another queries a SQLite database.</p>
+
+  <h2>Why this matters</h2>
+  <p>Before MCP, connecting an AI to your data meant writing custom code for every AI app and every data source. With MCP:</p>
+  <ul>
+    <li><strong>One server works with many AI apps.</strong> A file server built for MCP works in Claude Desktop, in supported editors, and anywhere else MCP is supported.</li>
+    <li><strong>You stay in control.</strong> The server only sees what you tell it to see. Nothing leaves your machine unless you want it to.</li>
+    <li><strong>Standardized.</strong> One way of asking "list files" or "read this document," regardless of which AI you use.</li>
+  </ul>
+
+  <h2>What this guide covers</h2>
+  <ol>
+    <li><a href="installing-running.html">Installing and running an MCP server locally</a> — get a server up on your own computer</li>
+    <li><a href="connecting-to-files.html">Connecting to files</a> — let an AI read files from a folder you pick</li>
+    <li><a href="connecting-to-databases.html">Connecting to databases</a> — let an AI query a local database safely</li>
+    <li><a href="safety-rules.html">Safety rules for AI file access</a> — keep your private data private</li>
+    <li><a href="checklists.html">Step-by-step checklists</a> — copy-paste friendly checklists for every step</li>
+  </ol>
+
+  <p class="callout green" style="border:none;padding:.9rem 1.25rem;">
+    <strong>Published by Asdale Dynamics, LLC.</strong> An Indiana LLC focused on beginner-friendly AI education, books, and guides. Learn more at <a href="https://dylanasdale.github.io" target="_blank" rel="noopener">dylanasdale.github.io</a>.
+  </p>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p><strong>MCP Servers — Plain English Guide</strong></p>
+    <p>Written by <strong>Asdale Dynamics, LLC</strong> — Indiana, formed October 2026. Beginner-friendly AI education, books, and practical tools.</p>
+    <p>Dylan Asdale — registered nurse, AI author, founder. <em>The Massive AI Manual</em> and hub site <a href="https://dylanasdale.github.io" target="_blank" rel="noopener">dylanasdale.github.io</a>.</p>
+    <p>MIT License. Copyright (c) 2026 Asdale Dynamics, LLC.</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+{
+  "name": "mcp-filesystem-demo",
+  "version": "1.0.0",
+  "description": "Demo MCP server for the beginner MCP guide (filesystem, stdio, no dependencies)",
+  "license": "MIT",
+  "private": true
+}

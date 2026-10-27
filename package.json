@@ -1,0 +1,18 @@
+{
+  "name": "mcp-servers-plain-english-guide",
+  "version": "1.0.0",
+  "description": "Beginner manual and static site explaining the Model Context Protocol (MCP), with a working local demo MCP server.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "."
+  },
+  "scripts": {
+    "start": "node demo-server/server.js",
+    "demo": "node scripts/verify-mcp.js",
+    "lint": "node --check demo-server/server.js && node --check scripts/verify-mcp.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

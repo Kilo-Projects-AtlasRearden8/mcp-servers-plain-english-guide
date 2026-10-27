@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connecting to Files — Plain English Guide</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html">MCP Plain English<span class="llc">· Asdale Dynamics, LLC</span></a>
+    <nav class="nav-links">
+      <a href="what-is-mcp.html">What is MCP?</a>
+      <a href="installing-running.html">Install &amp; run</a>
+      <a href="connecting-to-files.html">Files</a>
+      <a href="connecting-to-databases.html">Databases</a>
+      <a href="safety-rules.html">Safety</a>
+      <a href="checklists.html">Checklists</a>
+    </nav>
+  </div>
+</header>
+
+<main class="article">
+  <header>
+    <p class="kicker">Chapter 3 · Beginner manual</p>
+    <h1>Connecting an MCP Server to Your Files</h1>
+    <p class="intro">One of the most useful things an MCP server can do is let an AI assistant read files from your computer — so you can say "summarize the notes in my journal folder" instead of copying and pasting every note.</p>
+  </header>
+
+  <div class="callout green">
+    <strong>The golden rule of MCP file access.</strong> The AI can only see files inside a folder you explicitly choose. It cannot wander through your whole computer. If you point the server at <code>demo-server/data/</code>, it can see files in that folder and nothing else.
+  </div>
+
+  <h2>How it works (demo server)</h2>
+  <p>The demo server exposes two tools:</p>
+  <table>
+    <thead><tr><th>Tool</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td><code>list_files</code></td><td>Lists files and folders inside the allowed folder</td></tr>
+      <tr><td><code>read_file</code></td><td>Reads the text contents of one file inside the allowed folder</td></tr>
+    </tbody>
+  </table>
+  <p>The server runs on <code>stdio</code> — plain text messages sent back and forth between the AI app and the server. No website, no cloud account, no API key.</p>
+
+  <h2>Try it: step by step</h2>
+  <ol>
+    <li><strong>Start the server.</strong>
+      <pre><code>cd demo-server
+node server.js</code></pre>
+      Leave this terminal open.</li>
+    <li><strong>Add some files to play with.</strong>
+      <pre><code>echo "Hello from the demo folder. This is a test file for MCP." &gt; demo-server/data/hello.txt</code></pre></li>
+    <li><strong>Connect an MCP client.</strong> Configure your AI app to run <code>node /absolute/path/to/demo-server/server.js</code> as an MCP server (see the Install &amp; run chapter).</li>
+    <li><strong>Ask the AI.</strong> Try "What files are available?" or "Read hello.txt and tell me what it says."</li>
+  </ol>
+  <p>The AI asks the server through MCP, the server reads the file, and the AI answers you. Nothing was copied and pasted by hand.</p>
+
+  <h2>Connecting to your own folder</h2>
+  <p>To point the server at a folder of your own, edit <code>demo-server/server.js</code> and change the <code>ALLOWED_DIR</code> constant to the full path of your folder:</p>
+  <pre><code>const ALLOWED_DIR = "/Users/you/Documents/my-notes";</code></pre>
+  <p>Then restart the server (<code>Ctrl + C</code>, then <code>node server.js</code>) and restart your AI app.</p>
+  <div class="callout amber">
+    <strong>Only point it at folders you're comfortable sharing with the AI.</strong> Personal journals, draft writing, and project notes are fine. Password lists, tax returns, and anything with someone else's private data are not.
+  </div>
+
+  <h2>What the server cannot do (by design)</h2>
+  <ul>
+    <li>It cannot delete or overwrite files (read-only in this demo)</li>
+    <li>It cannot go outside the allowed folder</li>
+    <li>It cannot run programs on your computer</li>
+    <li>It cannot access the internet</li>
+  </ul>
+
+  <h2>If something doesn't show up</h2>
+  <ul>
+    <li>Make sure the file is inside <code>ALLOWED_DIR</code>, not in a subfolder the server was told to skip</li>
+    <li>Check that the filename has no typos</li>
+    <li>Restart the server after changing <code>ALLOWED_DIR</code></li>
+    <li>Restart the AI app after changing its MCP config</li>
+  </ul>
+
+  <p><a href="safety-rules.html">Next: Safety rules →</a></p>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p><strong>MCP Servers — Plain English Guide</strong></p>
+    <p>Written by <strong>Asdale Dynamics, LLC</strong> — Indiana, formed October 2026. Beginner-friendly AI education, books, and practical tools.</p>
+    <p>Dylan Asdale — registered nurse, AI author, founder. <em>The Massive AI Manual</em> and hub site <a href="https://dylanasdale.github.io" target="_blank" rel="noopener">dylanasdale.github.io</a>.</p>
+    <p>MIT License. Copyright (c) 2026 Asdale Dynamics, LLC.</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Safety Rules for AI File Access — Plain English Guide</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html">MCP Plain English<span class="llc">· Asdale Dynamics, LLC</span></a>
+    <nav class="nav-links">
+      <a href="what-is-mcp.html">What is MCP?</a>
+      <a href="installing-running.html">Install &amp; run</a>
+      <a href="connecting-to-files.html">Files</a>
+      <a href="connecting-to-databases.html">Databases</a>
+      <a href="safety-rules.html">Safety</a>
+      <a href="checklists.html">Checklists</a>
+    </nav>
+  </div>
+</header>
+
+<main class="article">
+  <header>
+    <p class="kicker">Chapter 5 · Beginner manual</p>
+    <h1>Safety Rules for AI File Access</h1>
+    <p class="intro">Letting an AI read your files is powerful. It also means the AI — and anyone who can talk to that AI — could potentially read anything the MCP server can reach. These rules help you keep your private data private.</p>
+    <p class="intro">This guide is educational. It is not a substitute for professional security advice.</p>
+  </header>
+
+  <h2>Rule 1: Choose the folder, don't let the server choose</h2>
+  <p>Point the MCP server at one specific folder — for example, <code>demo-server/data/</code> or a "Notes for AI" folder you create. Never point it at your whole home directory, your Documents folder, or your drive root.</p>
+  <div class="callout amber">
+    <strong>Bad:</strong> <code>C:\Users\you\Documents</code> (too broad)<br>
+    <strong>Better:</strong> <code>C:\Users\you\Documents\ai-notes</code> (chosen on purpose)
+  </div>
+
+  <h2>Rule 2: Assume anything in the allowed folder could be read</h2>
+  <p>If a file is inside the folder the server can see, treat it as readable by the AI. Don't keep secrets in that folder "just in case the AI never looks there." It might.</p>
+
+  <h2>Rule 3: Keep secrets out of MCP folders</h2>
+  <p>Never put these in an MCP-accessible folder:</p>
+  <ul>
+    <li>Passwords, API keys, or access tokens</li>
+    <li>Credit card or bank account numbers</li>
+    <li>Social Security numbers or IDs</li>
+    <li>Medical records about real people</li>
+    <li>Someone else's private documents or messages</li>
+    <li>Your SSH keys or encryption keys</li>
+  </ul>
+  <p>If you need to work with sensitive files, process them yourself first, remove the secrets, then put the cleaned copy in the MCP folder.</p>
+
+  <h2>Rule 4: Prefer read-only servers</h2>
+  <p>The demo server in this guide only reads files — it cannot change or delete anything. When choosing MCP servers, prefer ones that only do what you need. A file-reading server should not be able to delete files.</p>
+
+  <h2>Rule 5: Don't connect MCP to production data while learning</h2>
+  <p>Use practice files and practice databases, not your real business records, not your live website database, and not your only copy of anything important.</p>
+
+  <h2>Rule 6: You are still in charge</h2>
+  <p>The AI suggests; you decide. Before acting on anything an AI tells you based on your files — especially money, health, or legal decisions — double-check it yourself. AI can make mistakes.</p>
+
+  <h2>Rule 7: Local is usually safer</h2>
+  <p>The MCP servers in this guide run on your computer (<code>stdio</code>), not in the cloud. Your file contents don't leave your machine unless you specifically configure them to. Keep it local-first whenever you can.</p>
+
+  <h2>Rule 8: Know what your AI app remembers</h2>
+  <p>Some AI apps remember past chats to train future models. Check your app's settings and turn off training/data sharing if you're working with personal files. This is an app setting, not an MCP setting — look in your AI app's privacy options.</p>
+
+  <h2>Quick safety checklist</h2>
+  <ul class="checklist">
+    <li>The folder contains only files I'm comfortable an AI reading</li>
+    <li>No passwords, keys, IDs, or medical info inside</li>
+    <li>The server is read-only (cannot delete or overwrite)</li>
+    <li>I'm using a practice copy, not my only/live data</li>
+    <li>I know the full path I'm pointing the server at</li>
+    <li>I've checked my AI app's data-sharing/training settings</li>
+  </ul>
+
+  <h2>If you accidentally shared something sensitive</h2>
+  <ol>
+    <li>Stop the MCP server.</li>
+    <li>Remove the file from the allowed folder (or point the server at a different folder).</li>
+    <li>Assume the AI may have seen it — if it was a password or API key, change it.</li>
+    <li>Restart the server and your AI app.</li>
+  </ol>
+
+  <h2>A note about healthcare</h2>
+  <p>Asdale Dynamics, LLC publishes education-only healthcare-worker AI aids. MCP can help organize paperwork or summarize public information, but <strong>never use AI or MCP to make medical decisions, diagnose, or handle real patient records without professional oversight.</strong> This guide is not medical advice.</p>
+
+  <p><a href="checklists.html">Next: Step-by-step checklists →</a></p>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p><strong>MCP Servers — Plain English Guide</strong></p>
+    <p>Written by <strong>Asdale Dynamics, LLC</strong> — Indiana, formed October 2026. Beginner-friendly AI education, books, and practical tools.</p>
+    <p>Dylan Asdale — registered nurse, AI author, founder. <em>The Massive AI Manual</em> and hub site <a href="https://dylanasdale.github.io" target="_blank" rel="noopener">dylanasdale.github.io</a>.</p>
+    <p>MIT License. Copyright (c) 2026 Asdale Dynamics, LLC.</p>
+  </div>
+</footer>
+
+</body>
+</html>

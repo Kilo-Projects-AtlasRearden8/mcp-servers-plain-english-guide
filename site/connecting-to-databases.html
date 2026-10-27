@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connecting to Databases — Plain English Guide</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html">MCP Plain English<span class="llc">· Asdale Dynamics, LLC</span></a>
+    <nav class="nav-links">
+      <a href="what-is-mcp.html">What is MCP?</a>
+      <a href="installing-running.html">Install &amp; run</a>
+      <a href="connecting-to-files.html">Files</a>
+      <a href="connecting-to-databases.html">Databases</a>
+      <a href="safety-rules.html">Safety</a>
+      <a href="checklists.html">Checklists</a>
+    </nav>
+  </div>
+</header>
+
+<main class="article">
+  <header>
+    <p class="kicker">Chapter 4 · Beginner manual</p>
+    <h1>Connecting an MCP Server to a Database</h1>
+    <p class="intro">MCP servers can also connect to databases, so an AI assistant can answer questions like "How many orders did we have last month?" without you exporting spreadsheets by hand.</p>
+  </header>
+
+  <h2>How database access works with MCP</h2>
+  <ol>
+    <li>You install (or run) a database MCP server — for example, a Postgres or SQLite MCP server.</li>
+    <li>You tell it which database to connect to (host, port, database name) and what login to use.</li>
+    <li>Your AI app connects to that MCP server.</li>
+    <li>You ask questions in plain English. The AI turns them into database queries, the server runs them, and the AI reads the results back to you.</li>
+  </ol>
+
+  <div class="callout red">
+    <strong>Safety first: databases hold sensitive data.</strong> Databases often contain customer lists, financial records, or health information. Before connecting an MCP server to a database:
+    <ul>
+      <li>Use a read-only database user whenever possible. The AI should never be able to delete records.</li>
+      <li>Connect to a local copy, not your live production database, while you're learning.</li>
+      <li>Never hard-code passwords in config files you might share. Use environment variables or your AI app's secret store.</li>
+      <li>Review the server's documentation to see exactly what queries it allows.</li>
+    </ul>
+  </div>
+
+  <h2>Local demo: SQLite (read-only example)</h2>
+  <p>SQLite is a database that lives in a single file on your computer. No separate database program to install. This makes it a great way to learn.</p>
+  <ol>
+    <li><strong>Install SQLite tools.</strong>
+      <pre><code># macOS
+brew install sqlite
+
+# Ubuntu/Debian
+sudo apt-get install sqlite3</code></pre></li>
+    <li><strong>Create a practice database.</strong>
+      <pre><code>sqlite3 practice.db &lt;&lt;'EOF'
+CREATE TABLE books (
+  id INTEGER PRIMARY KEY,
+  title TEXT,
+  author TEXT,
+  year INTEGER
+);
+INSERT INTO books (title, author, year) VALUES
+  ('The Massive AI Manual', 'Dylan Asdale', 2026),
+  ('Learning MCP', 'Asdale Dynamics, LLC', 2026);
+EOF</code></pre></li>
+    <li><strong>Connect an MCP server.</strong> Look for a community MCP server for SQLite. Its configuration usually looks like:</li>
+  </ol>
+  <pre><code>{
+  "mcpServers": {
+    "sqlite-practice": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sqlite", "/absolute/path/to/practice.db"],
+      "env": {}
+    }
+  }
+}</code></pre>
+  <p>The exact package name and args depend on which server you choose — check its README.</p>
+
+  <h2>Ask the AI</h2>
+  <p>Once connected:</p>
+  <ul>
+    <li>"What tables are in the database?"</li>
+    <li>"List all books published in 2026."</li>
+  </ul>
+  <p>The AI writes the query, the MCP server runs it against <code>practice.db</code>, and the AI reports back.</p>
+
+  <h2>What to look for in a database MCP server</h2>
+  <table>
+    <thead><tr><th>Good sign</th><th>Red flag</th></tr></thead>
+    <tbody>
+      <tr><td>Read-only mode available</td><td>Requires full admin credentials</td></tr>
+      <tr><td>Lets you restrict which tables it can touch</td><td>Wants access to "everything"</td></tr>
+      <tr><td>Clear docs on what queries it runs</td><td>No documentation or auditing</td></tr>
+      <tr><td>Runs locally on your machine</td><td>Sends queries to a remote server by default</td></tr>
+    </tbody>
+  </table>
+
+  <p><a href="safety-rules.html">Next: Safety rules →</a></p>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p><strong>MCP Servers — Plain English Guide</strong></p>
+    <p>Written by <strong>Asdale Dynamics, LLC</strong> — Indiana, formed October 2026. Beginner-friendly AI education, books, and practical tools.</p>
+    <p>Dylan Asdale — registered nurse, AI author, founder. <em>The Massive AI Manual</em> and hub site <a href="https://dylanasdale.github.io" target="_blank" rel="noopener">dylanasdale.github.io</a>.</p>
+    <p>MIT License. Copyright (c) 2026 Asdale Dynamics, LLC.</p>
+  </div>
+</footer>
+
+</body>
+</html>

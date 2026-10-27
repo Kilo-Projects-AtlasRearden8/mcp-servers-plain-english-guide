@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Step-by-Step Checklists — Plain English Guide</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html">MCP Plain English<span class="llc">· Asdale Dynamics, LLC</span></a>
+    <nav class="nav-links">
+      <a href="what-is-mcp.html">What is MCP?</a>
+      <a href="installing-running.html">Install &amp; run</a>
+      <a href="connecting-to-files.html">Files</a>
+      <a href="connecting-to-databases.html">Databases</a>
+      <a href="safety-rules.html">Safety</a>
+      <a href="checklists.html">Checklists</a>
+    </nav>
+  </div>
+</header>
+
+<main class="article">
+  <header>
+    <p class="kicker">Chapter 6 · Beginner manual</p>
+    <h1>Step-by-Step Checklists</h1>
+    <p class="intro">Copy these checklists and check them off as you go.</p>
+  </header>
+
+  <h2>Checklist A: Install and run the demo MCP server</h2>
+  <ul class="checklist">
+    <li>Node.js 18+ is installed (<code>node --version</code> shows v18 or higher)</li>
+    <li>You've downloaded or cloned this guide</li>
+    <li>Terminal is open inside <code>mcp-servers-plain-english-guide/demo-server/</code></li>
+    <li><code>npm install</code> ran without errors</li>
+    <li><code>node server.js</code> prints: <code>MCP filesystem demo server running on stdio</code></li>
+    <li>That terminal stays open while you use the server</li>
+    <li>To stop: press <code>Ctrl + C</code></li>
+  </ul>
+
+  <h2>Checklist B: Connect the demo server to an AI app</h2>
+  <ul class="checklist">
+    <li>The demo server is running (<code>node server.js</code>)</li>
+    <li>You know the absolute path to <code>demo-server/server.js</code></li>
+    <li>Your AI app's MCP config points <code>command: "node"</code> and <code>args: ["&lt;absolute path&gt;/demo-server/server.js"]</code></li>
+    <li>The path contains no typos and no <code>~</code> shortcuts (use the full path)</li>
+    <li>You restarted the AI app after saving the config</li>
+    <li>The AI app shows the server as connected</li>
+  </ul>
+
+  <h2>Checklist C: Try file access</h2>
+  <ul class="checklist">
+    <li><code>demo-server/data/</code> exists</li>
+    <li>You added a practice file, e.g. <code>demo-server/data/hello.txt</code></li>
+    <li>You asked the AI: "What files are available?"</li>
+    <li>You asked the AI to read a file: "Read hello.txt"</li>
+    <li>The AI answered with the file's contents (no copy-pasting by you)</li>
+  </ul>
+
+  <h2>Checklist D: Point the server at your own folder</h2>
+  <ul class="checklist">
+    <li>You created or chose a folder with only AI-safe files</li>
+    <li>You edited <code>ALLOWED_DIR</code> in <code>demo-server/server.js</code> to that folder's full path</li>
+    <li>You restarted the server (<code>Ctrl + C</code>, then <code>node server.js</code>)</li>
+    <li>You restarted your AI app</li>
+    <li>The AI can list and read files in your chosen folder</li>
+  </ul>
+
+  <h2>Checklist E: Safety before using real data</h2>
+  <ul class="checklist">
+    <li>The folder has no passwords, API keys, IDs, or medical records</li>
+    <li>The server is read-only</li>
+    <li>You're using a practice copy, not your only/live data</li>
+    <li>You checked your AI app's data-sharing/training settings</li>
+    <li>You understand the AI can make mistakes — you'll double-check important answers</li>
+  </ul>
+
+  <h2>Checklist F: Try a database connection (when you're ready)</h2>
+  <ul class="checklist">
+    <li>You installed SQLite (or your chosen database tool)</li>
+    <li>You created a practice database (not your live data)</li>
+    <li>You found an MCP server for your database type</li>
+    <li>You configured the MCP server with a read-only database user</li>
+    <li>No passwords are hard-coded in shared config files</li>
+    <li>You asked one practice question and got an answer</li>
+  </ul>
+
+  <p>Keep these checklists handy. If something doesn't work, go back to the matching chapter and walk through it again. You've got this.</p>
+
+  <div class="callout green" style="border:none;">
+    <strong>— Asdale Dynamics, LLC</strong> (Indiana, formed Oct 2026)<br>
+    Beginner-friendly AI education. <a href="https://dylanasdale.github.io" target="_blank" rel="noopener">dylanasdale.github.io</a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p><strong>MCP Servers — Plain English Guide</strong></p>
+    <p>Written by <strong>Asdale Dynamics, LLC</strong> — Indiana, formed October 2026. Beginner-friendly AI education, books, and practical tools.</p>
+    <p>Dylan Asdale — registered nurse, AI author, founder. <em>The Massive AI Manual</em> and hub site <a href="https://dylanasdale.github.io" target="_blank" rel="noopener">dylanasdale.github.io</a>.</p>
+    <p>MIT License. Copyright (c) 2026 Asdale Dynamics, LLC.</p>
+  </div>
+</footer>
+
+</body>
+</html>

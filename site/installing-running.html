@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Install &amp; Run an MCP Server — Plain English Guide</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html">MCP Plain English<span class="llc">· Asdale Dynamics, LLC</span></a>
+    <nav class="nav-links">
+      <a href="what-is-mcp.html">What is MCP?</a>
+      <a href="installing-running.html">Install &amp; run</a>
+      <a href="connecting-to-files.html">Files</a>
+      <a href="connecting-to-databases.html">Databases</a>
+      <a href="safety-rules.html">Safety</a>
+      <a href="checklists.html">Checklists</a>
+    </nav>
+  </div>
+</header>
+
+<main class="article">
+  <header>
+    <p class="kicker">Chapter 2 · Beginner manual</p>
+    <h1>Installing and Running an MCP Server Locally</h1>
+    <p class="intro">Plain English, step by step, never condescending. This chapter walks you through installing and running one MCP server on your own computer using the demo server included in this guide.</p>
+  </header>
+
+  <h2>What you need</h2>
+  <ul>
+    <li>A computer (Windows, Mac, or Linux)</li>
+    <li><strong>Node.js</strong> version 18 or newer. Check with <code>node --version</code>. Download the LTS version from nodejs.org if needed.</li>
+    <li>A terminal (Command Prompt or PowerShell on Windows, Terminal on Mac, any terminal on Linux)</li>
+  </ul>
+  <p>No accounts, no credit cards, no secrets needed.</p>
+
+  <h2>Step 1: Get this guide</h2>
+  <p>Download or clone the guide, then open a terminal in the folder:</p>
+  <pre><code>cd mcp-servers-plain-english-guide</code></pre>
+  <p>Look inside — you should see a <code>demo-server/</code> folder with <code>server.js</code> and <code>package.json</code>.</p>
+
+  <h2>Step 2: Install the demo server's dependencies</h2>
+  <p>From the <code>demo-server/</code> folder:</p>
+  <pre><code>cd demo-server
+npm install</code></pre>
+  <p>This creates a <code>node_modules/</code> folder. That's normal — it's just code the server needs to run.</p>
+
+  <h2>Step 3: Run the server</h2>
+  <pre><code>node server.js</code></pre>
+  <p>You should see:</p>
+  <pre><code>MCP filesystem demo server running on stdio</code></pre>
+  <p>The server stays running and waits for an MCP client (like an AI app) to connect. Leave that terminal open.</p>
+  <p>To stop the server, press <code>Ctrl + C</code> in that terminal.</p>
+
+  <h2>Step 4: Point an MCP client at it</h2>
+  <p>How you connect depends on the AI app you use. In <strong>Claude Desktop</strong>, for example, you edit a config file (usually <code>claude_desktop_config.json</code>) and add something like:</p>
+  <pre><code>{
+  "mcpServers": {
+    "demo-files": {
+      "command": "node",
+      "args": ["/absolute/path/to/mcp-servers-plain-english-guide/demo-server/server.js"],
+      "env": {}
+    }
+  }
+}</code></pre>
+  <ul>
+    <li>Replace <code>/absolute/path/to/...</code> with the real full path to <code>demo-server/server.js</code> on your computer.</li>
+    <li>On Windows, use forward slashes or double backslashes in the path.</li>
+    <li>Save the file and restart Claude Desktop.</li>
+  </ul>
+  <p>Every MCP client has its own config format. Check your app's docs for "MCP server configuration" or "local MCP server."</p>
+
+  <h2>What the demo server does</h2>
+  <p>It exposes two tools over MCP:</p>
+  <table>
+    <thead><tr><th>Tool</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td><code>list_files</code></td><td>Lists files and folders inside the allowed folder</td></tr>
+      <tr><td><code>read_file</code></td><td>Reads the contents of one file inside the allowed folder</td></tr>
+    </tbody>
+  </table>
+  <p>It only touches the <code>demo-server/data/</code> folder by default. It cannot reach the rest of your computer.</p>
+
+  <h2>Troubleshooting checklist</h2>
+  <ul class="checklist">
+    <li><code>node: command not found</code> — install Node.js first, then restart your terminal</li>
+    <li><code>Cannot find module</code> — run <code>npm install</code> inside <code>demo-server/</code></li>
+    <li>Client can't connect — double-check the path is absolute (not relative), and restart the AI app after changing config</li>
+    <li>Nothing happens — make sure <code>node server.js</code> is running in its own terminal before the client tries to connect</li>
+  </ul>
+
+  <p><a href="connecting-to-files.html">Next: Connecting to files →</a></p>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p><strong>MCP Servers — Plain English Guide</strong></p>
+    <p>Written by <strong>Asdale Dynamics, LLC</strong> — Indiana, formed October 2026. Beginner-friendly AI education, books, and practical tools.</p>
+    <p>Dylan Asdale — registered nurse, AI author, founder. <em>The Massive AI Manual</em> and hub site <a href="https://dylanasdale.github.io" target="_blank" rel="noopener">dylanasdale.github.io</a>.</p>
+    <p>MIT License. Copyright (c) 2026 Asdale Dynamics, LLC.</p>
+  </div>
+</footer>
+
+</body>
+</html>
