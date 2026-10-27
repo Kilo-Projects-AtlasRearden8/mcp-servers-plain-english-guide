@@ -30,18 +30,29 @@ function send(proc, message) {
   });
 }
 
+// Reads one complete JSON line from stdout, buffering across data events so a
+// partial line (no trailing newline yet) is never parsed prematurely.
 function nextLine(proc) {
   return new Promise((resolve, reject) => {
+    let buffer = "";
     const onData = (chunk) => {
-      const text = Buffer.from(chunk).toString("utf8");
-      const lines = text.split("\n");
-      // Keep partial lines simple: verification output is line-based.
-      for (const line of lines) {
-        if (line.trim()) {
-          proc.stdout.removeListener("data", onData);
-          resolve(JSON.parse(line.trim()));
-          return;
-        }
+      buffer += Buffer.from(chunk).toString("utf8");
+      const newlineIndex = buffer.indexOf("\n");
+      if (newlineIndex === -1) {
+        return; // wait for more data
+      }
+      const line = buffer.slice(0, newlineIndex).trim();
+      buffer = buffer.slice(newlineIndex + 1);
+      proc.stdout.removeListener("data", onData);
+      if (!line) {
+        // Empty line: keep waiting for a real one.
+        proc.stdout.on("data", onData);
+        return;
+      }
+      try {
+        resolve(JSON.parse(line));
+      } catch (err) {
+        reject(new Error("Could not parse server response: " + line));
       }
     };
     proc.stdout.on("data", onData);
@@ -132,6 +143,30 @@ async function main() {
         ? traversal.result.content[0].text
         : "";
     assert(/Error/.test(traversalText) || (traversal.error && traversal.error.message), "path traversal attempt is rejected or reported as an error");
+
+    // 6. Missing required argument (path) on read_file -> error content
+    await send(proc, {
+      jsonrpc: "2.0",
+      id: 6,
+      method: "tools/call",
+      params: { name: "read_file", arguments: {} },
+    });
+    const missingArg = await nextLine(proc);
+    const missingArgText =
+      missingArg.result && missingArg.result.content && missingArg.result.content[0]
+        ? missingArg.result.content[0].text
+        : "";
+    assert(/Error/.test(missingArgText), "read_file without path reports an error");
+
+    // 7. Unknown tool -> method-not-found style error
+    await send(proc, {
+      jsonrpc: "2.0",
+      id: 7,
+      method: "tools/call",
+      params: { name: "delete_file", arguments: { path: "hello.txt" } },
+    });
+    const unknownTool = await nextLine(proc);
+    assert(!!unknownTool.error || /Unknown tool/.test(unknownTool.result.content[0].text), "unknown tool is rejected");
 
     console.log(`\n${passed} passed, ${failed} failed`);
     if (failed === 0) {

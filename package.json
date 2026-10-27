@@ -10,7 +10,8 @@
   "scripts": {
     "start": "node demo-server/server.js",
     "demo": "node scripts/verify-mcp.js",
-    "lint": "node --check demo-server/server.js && node --check scripts/verify-mcp.js"
+    "lint": "node --check demo-server/server.js && node --check scripts/verify-mcp.js && node --check scripts/test-path-safety.js",
+    "test": "node scripts/test-path-safety.js && node scripts/verify-mcp.js"
   },
   "engines": {
     "node": ">=18"

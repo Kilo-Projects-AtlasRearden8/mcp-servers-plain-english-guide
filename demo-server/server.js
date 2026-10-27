@@ -237,4 +237,18 @@ function main() {
   });
 }
 
-main();
+// Exported so the safety logic can be unit-tested without starting the server.
+module.exports = {
+  ALLOWED_DIR,
+  isInsideAllowedDir,
+  safeResolve,
+  listFiles,
+  readFileContent,
+  TOOLS,
+  handleRequest,
+};
+
+// Only start the server when run directly, not when required as a module.
+if (require.main === module) {
+  main();
+}

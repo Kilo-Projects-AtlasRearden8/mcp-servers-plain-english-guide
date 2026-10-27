@@ -17,32 +17,82 @@ This guide is for anyone who wants to understand MCP without a computer science 
 | `docs/` | The beginner manual as Markdown: what MCP is, installing and running a server, connecting to files, connecting to databases, safety rules, and step-by-step checklists |
 | `site/` | A static HTML website mirroring the manual (no build step — open `site/index.html` in any browser) |
 | `demo-server/` | A working local MCP server (filesystem, stdio, no dependencies) you can install and run to try MCP yourself |
-| `scripts/verify-mcp.js` | A script that starts the demo server and verifies the MCP handshake works |
+| `scripts/` | `verify-mcp.js` checks the MCP handshake works; `test-path-safety.js` unit-tests the directory-traversal protection |
 
 ## Quick start
 
+### 1. Read the manual
+
+Open `docs/01-what-is-mcp.md` in any text editor, or open `site/index.html` in your web browser to read the polished static site.
+
+### 2. Run the demo MCP server
+
 ```bash
-# 1. Read the manual
-open docs/01-what-is-mcp.md
-# or open the website:
-open site/index.html
-
-# 2. Run the demo MCP server
 cd demo-server
-npm install      # (optional; the server has no runtime dependencies)
+npm install
 node server.js
-# MCP filesystem demo server running on stdio
+```
 
-# 3. Verify it works
-cd ..
+You should see:
+
+```
+MCP filesystem demo server running on stdio
+```
+
+Leave that terminal open. To stop the server, press `Ctrl + C`.
+
+### 3. Verify it works
+
+In a new terminal, from the repository root:
+
+```bash
 node scripts/verify-mcp.js
 ```
 
-Then connect an MCP client (for example, Claude Desktop) to `node <absolute path>/demo-server/server.js` and ask it to read files inside `demo-server/data/`.
+You should see `VERIFICATION OK` and exit code 0. This starts the demo server, performs the MCP handshake (`initialize`, `tools/list`, `tools/call`), reads a file, and confirms that directory-traversal attacks are blocked.
+
+You can also run the standalone path-safety unit tests:
+
+```bash
+node scripts/test-path-safety.js
+```
+
+### 4. Connect an MCP client
+
+Connect your AI app (for example, Claude Desktop) to the demo server by adding it to the app's MCP server config:
+
+```json
+{
+  "mcpServers": {
+    "demo-files": {
+      "command": "node",
+      "args": ["/absolute/path/to/mcp-servers-plain-english-guide/demo-server/server.js"],
+      "env": {}
+    }
+  }
+}
+```
+
+- Replace `/absolute/path/to/...` with the real full path to `demo-server/server.js` on your computer.
+- On Windows, use forward slashes or double backslashes in the path.
+- Save the file and restart your AI app.
+
+Then ask the AI: "What files are available?" or "Read hello.txt."
+
+## What the demo server does
+
+It exposes two read-only tools over MCP:
+
+- `list_files` — lists files and folders inside the allowed folder
+- `read_file` — reads the text contents of one file inside the allowed folder
+
+By default it only touches `demo-server/data/`. It cannot reach the rest of your computer, cannot delete or overwrite files, cannot run programs, and cannot access the internet.
 
 ## Safety
 
 Read `docs/05-safety-rules-ai-file-access.md` before pointing an MCP server at folders with real personal data. Short version: choose one specific folder, keep passwords and keys out of it, prefer read-only servers, and practice on copies, not your live data.
+
+This guide is educational. It is not a substitute for professional security advice, and it is not medical advice.
 
 ## License
 
